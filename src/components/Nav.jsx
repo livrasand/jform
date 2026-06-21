@@ -2,7 +2,7 @@ import { useI18n } from "../i18n.jsx";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function Nav({ simple }) {
+export default function Nav({ simple, solid }) {
   const { t, lang, switchLang } = useI18n();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,12 +11,13 @@ export default function Nav({ simple }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    if (solid) return;
     function onScroll() {
       setScrolled(window.scrollY > 40);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [solid]);
 
   // cierra el dropdown de FAQs al hacer click fuera o pulsar Esc
   useEffect(() => {
@@ -78,6 +79,14 @@ export default function Nav({ simple }) {
       style={
         scrolled
           ? {}
+          : simple || solid
+          ? {
+              "--text": "#1c1414",
+              "--text-2": "rgba(28,20,20,0.55)",
+              "--text-3": "rgba(28,20,20,0.3)",
+              background: "#fffafa",
+              borderBottom: "1px solid var(--border, #e5e0e0)",
+            }
           : {
               "--text": "#fffafa",
               "--text-2": "rgba(255,250,250,0.8)",
@@ -95,23 +104,26 @@ export default function Nav({ simple }) {
           alt="JForm"
           className="logo-img"
           width="25px"
+          style={simple || solid || scrolled ? { filter: "invert(1)" } : undefined}
         />
         JFORM
       </div>
       {simple ? (
         <ul className="nav-links" id="nav-links">
           <li>
-            <div className="lang-switcher">
+            <div className="lang-switcher" style={simple ? { background: "#f0f0f2", border: "1px solid #d0d0d5" } : undefined}>
               <button
                 className={lang === "es" ? "active" : ""}
                 onClick={() => switchLang("es")}
+                style={simple ? { color: "#1c1414", background: "transparent", border: "none" } : undefined}
               >
                 ES
               </button>
-              <span className="sep">|</span>
+              <span className="sep" style={simple ? { color: "rgba(28,20,20,0.55)" } : undefined}>|</span>
               <button
                 className={lang === "en" ? "active" : ""}
                 onClick={() => switchLang("en")}
+                style={simple ? { color: "#1c1414", background: "transparent", border: "none" } : undefined}
               >
                 EN
               </button>
@@ -149,7 +161,7 @@ export default function Nav({ simple }) {
                 style={{
                   background: "none",
                   border: "none",
-                  color: "#fffafa",
+                  color: "var(--text)",
                   cursor: "pointer",
                   fontFamily: "inherit",
                   fontSize: "0.88rem",
@@ -474,7 +486,7 @@ export default function Nav({ simple }) {
                 style={{
                   background: "none",
                   border: "none",
-                  color: "#fffafa",
+                  color: "var(--text)",
                   cursor: "pointer",
                   fontFamily: "inherit",
                   fontSize: "0.88rem",
@@ -757,6 +769,19 @@ export default function Nav({ simple }) {
             </li>
             <li>
               <a
+                href="/preview"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/preview");
+                  setMenuOpen(false);
+                }}
+                style={{ color: "var(--text)" }}
+              >
+                editor
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://github.com/livrasand/jform"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -776,17 +801,19 @@ export default function Nav({ simple }) {
               </a>
             </li>
             <li>
-              <div className="lang-switcher">
+              <div className="lang-switcher" style={solid ? { background: "#f0f0f2", border: "1px solid #d0d0d5" } : undefined}>
                 <button
                   className={lang === "es" ? "active" : ""}
                   onClick={() => switchLang("es")}
+                  style={solid ? { color: "#1c1414", background: "transparent", border: "none" } : undefined}
                 >
                   ES
                 </button>
-                <span className="sep">|</span>
+                <span className="sep" style={solid ? { color: "rgba(28,20,20,0.55)" } : undefined}>|</span>
                 <button
                   className={lang === "en" ? "active" : ""}
                   onClick={() => switchLang("en")}
+                  style={solid ? { color: "#1c1414", background: "transparent", border: "none" } : undefined}
                 >
                   EN
                 </button>

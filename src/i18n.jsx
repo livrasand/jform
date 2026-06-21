@@ -144,8 +144,7 @@ const translations = {
     form_submit: "Enviar datos",
     form_sending: "Enviando...",
     form_ok_title: "Enviado con exito",
-    form_ok_desc:
-      "Tu informacion se envio directamente al servidor del creador del formulario, sin intermediarios.",
+    form_ok_desc: "",
     footer_disclaimer: "Este contenido no ha sido creado ni aprobado por JFORM.",
     footer_contact: "Contactar con el propietario del formulario",
     footer_terms: "Términos del Servicio",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://jform.vercel.app/schema.v1.json",
+  "$schema": "https://jform.livrasand.com/schema.v1.json",
   "form_id": "ultimate-demo-2026",
   "settings": {
     "language": "es",

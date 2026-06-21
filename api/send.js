@@ -42,60 +42,41 @@ export default async function handler(req, res) {
     try {
         const ct = req.headers["content-type"] || "";
         if (ct.includes("multipart/form-data")) {
-            // En desarrollo, usar parser simple (sin soporte de archivos por ahora)
-            let raw;
-            if (Buffer.isBuffer(req.body)) {
-                raw = req.body;
-            } else {
-                raw = await new Promise((resolve, reject) => {
-                    const chunks = [];
-                    req.on("data", (chunk) => chunks.push(chunk));
-                    req.on("end", () => resolve(Buffer.concat(chunks)));
-                    req.on("error", reject);
+            const attachments = [];
+            await new Promise((resolve, reject) => {
+                const bb = Busboy({ headers: req.headers });
+                bb.on("field", (name, value) => {
+                    if (name === "owner") owner = value;
+                    else if (name === "form_title") formTitle = value;
+                    else formData[name] = value;
                 });
-            }
-            const boundary = ct.split("boundary=")[1]?.split(";")[0]?.trim();
-            if (boundary) {
-                const rawStr = raw.toString("binary");
-                const boundaryStr = "--" + boundary;
-                const sections = rawStr.split(boundaryStr);
-                const attachments = [];
-
-                for (const section of sections) {
-                    const sectionBuf = Buffer.from(section, "binary");
-                    const headerEnd = sectionBuf.indexOf("\r\n\r\n");
-                    if (headerEnd === -1) continue;
-                    const headers = sectionBuf.slice(0, headerEnd).toString("utf-8");
-                    const nameMatch = headers.match(/name="([^"]+)"/);
-                    if (!nameMatch) continue;
-                    const name = nameMatch[1];
-                    const filenameMatch = headers.match(/filename="([^"]+)"/);
-                    const ctMatch = headers.match(/Content-Type:\s*([^\r\n]+)/i);
-
-                    // Body: desde después del \r\n\r\n hasta el \r\n final
-                    const bodyBuf = sectionBuf.slice(headerEnd + 4);
-                    const bodyTrimmed = bodyBuf.slice(0, bodyBuf.length - 2); // quitar \r\n final
-
-                    if (filenameMatch) {
-                        const filename = filenameMatch[1];
-                        if (filename && bodyTrimmed.length > 0) {
-                            const mimeType = ctMatch ? ctMatch[1].trim() : "application/octet-stream";
+                bb.on("file", (name, stream, info) => {
+                    const { filename, mimeType } = info;
+                    const chunks = [];
+                    stream.on("data", (chunk) => chunks.push(chunk));
+                    stream.on("end", () => {
+                        const content = Buffer.concat(chunks);
+                        if (filename && content.length > 0) {
                             attachments.push({
                                 filename,
-                                content: bodyTrimmed.toString("base64"),
-                                type: mimeType,
+                                content: content.toString("base64"),
+                                type: mimeType || "application/octet-stream",
                             });
                             formData[name] = "[Archivo: " + filename + "]";
                         }
-                    } else {
-                        const value = bodyTrimmed.toString("utf-8");
-                        if (name === "owner") owner = value;
-                        else if (name === "form_title") formTitle = value;
-                        else formData[name] = value;
-                    }
+                    });
+                });
+                bb.on("close", resolve);
+                bb.on("error", reject);
+                // Puede llegar como stream o como Buffer pre-leído (dev middleware)
+                if (Buffer.isBuffer(req.body)) {
+                    bb.write(req.body);
+                    bb.end();
+                } else {
+                    req.pipe(bb);
                 }
-                req._jformAttachments = attachments;
-            }
+            });
+            req._jformAttachments = attachments;
         } else if (ct.includes("application/json")) {
             // JSON — leer stream si req.body no está pre-parseado
             let parsed = req.body;
@@ -301,50 +282,3 @@ function buildEmailHtmlPgp(title, encryptedBlock) {
     );
 }
 
-// Parser multipart/form-data minimalista (sin dependencias)
-function parseMultipart(buf, boundary) {
-    var result = {};
-    var attachments = [];
-    var parts = buf
-        .toString("utf-8", 0, Math.min(buf.length, 100000))
-        .split("--" + boundary);
-    parts.forEach(function (part) {
-        var headerEnd = part.indexOf("\r\n\r\n");
-        if (headerEnd === -1) return;
-        var headers = part.substring(0, headerEnd);
-        var bodyStart = headerEnd + 4;
-        var nameMatch = headers.match(/name="([^"]+)"/);
-        if (!nameMatch) return;
-        var name = nameMatch[1];
-        var filenameMatch = headers.match(/filename="([^"]+)"/);
-        var contentTypeMatch = headers.match(/Content-Type:\s*([^\r\n]+)/i);
-
-        if (filenameMatch) {
-            // Archivo - extraer contenido binario y convertir a base64
-            var filename = filenameMatch[1];
-            var contentType = contentTypeMatch ? contentTypeMatch[1].trim() : "application/octet-stream";
-
-            // Encontrar el body binario usando el buffer original
-            var partStr = buf.toString("utf-8", 0, Math.min(buf.length, 100000));
-            var partIndex = partStr.indexOf(part);
-            var bodyEnd = partStr.indexOf("\r\n--" + boundary, partIndex);
-            if (bodyEnd === -1) bodyEnd = partStr.length;
-
-            var bodyBytes = buf.slice(partIndex + headerEnd + 4, bodyEnd);
-            var base64 = bodyBytes.toString("base64");
-
-            attachments.push({
-                filename: filename,
-                content: base64,
-                type: contentType
-            });
-
-            result[name] = "[Archivo: " + filename + "]";
-        } else {
-            var body = part.substring(bodyStart).replace(/\r\n$/, "");
-            result[name] = body;
-        }
-    });
-    result._attachments = attachments;
-    return result;
-}

@@ -33,6 +33,12 @@ export default function FormView() {
         "--surface",
         theme.form_background || theme.colors.card_bg_hex || "#ffffff",
       );
+      // Agregar variables faltantes para descripciones y bordes en modo oscuro
+      const textColor = theme.colors.text_hex || theme.colors.text_hsl || "#1c1414";
+      r.style.setProperty("--text-2", "rgba(240, 246, 252, 0.7)");
+      r.style.setProperty("--text-3", "rgba(240, 246, 252, 0.5)");
+      r.style.setProperty("--border", "rgba(255,255,255,0.1)");
+      r.style.setProperty("--surface-2", "rgba(255,255,255,0.05)");
     } else {
       r.style.setProperty(
         "--bg",
@@ -401,7 +407,7 @@ export default function FormView() {
           textAlign: "center",
           padding: "24px 16px 32px",
           fontSize: "0.78rem",
-          color: "rgba(0,0,0,0.5)",
+          color: "var(--text-2)",
           lineHeight: 2,
         }}
       >
@@ -410,14 +416,14 @@ export default function FormView() {
           {" · "}
           <a
             href="/terms"
-            style={{ color: "rgba(0,0,0,0.55)", textDecoration: "underline" }}
+            style={{ color: "var(--text)", textDecoration: "underline" }}
           >
             {t("footer_terms")}
           </a>
           {" · "}
           <a
             href="/privacy"
-            style={{ color: "rgba(0,0,0,0.55)", textDecoration: "underline" }}
+            style={{ color: "var(--text)", textDecoration: "underline" }}
           >
             {t("footer_privacy")}
           </a>
@@ -438,7 +444,7 @@ export default function FormView() {
           alt="JFORM"
           style={{
             height: 32,
-            opacity: 0.35,
+            opacity: 0.5,
             filter: "invert(1)",
             display: "block",
             margin: "0 auto",

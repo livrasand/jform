@@ -17,10 +17,9 @@
     "form_background": "#161b22",
     "colors": {
       "primary_hex": "#2ea043",
-      "secondary_rgb": "rgb(139, 148, 158)",
-      "text_hsl": "hsl(0, 0%, 100%)",
-      "accent_hsv": "hsv(130, 100%, 50%)",
-      "border_cmyk": "cmyk(0%, 0%, 0%, 30%)"
+      "text_hex": "#f0f6fc",
+      "card_bg_hex": "#161b22",
+      "background_hex": "#0d1117"
     }
   },
   "header": {
