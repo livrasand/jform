@@ -367,11 +367,19 @@ export default function Landing() {
             marginTop: 24,
             pointerEvents: "auto",
           }}
-        >          
-          <a className="nav-cta" href="https://github.com/livrasand/jform/DOCS.md" target="_blank" rel="noopener noreferrer">
+        >
+          <a
+            className="nav-cta"
+            href="https://github.com/livrasand/jform/blob/master/DOCS.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t("nav_register")}
           </a>
-          <button className="nav-cta nav-cta--outline" onClick={() => navigate("/livrasand/contact")}>
+          <button
+            className="nav-cta nav-cta--outline"
+            onClick={() => navigate("/livrasand/contact")}
+          >
             {t("nav_demo")}
           </button>
           <button className="nav-cta" onClick={() => setShowRegister(true)}>
@@ -576,9 +584,7 @@ export default function Landing() {
                   </div>
 
                   <div className="field-group" style={{ marginBottom: 20 }}>
-                    <label style={fieldLabel}>
-                      {t("register_pgp_label")}
-                    </label>
+                    <label style={fieldLabel}>{t("register_pgp_label")}</label>
                     <p
                       style={{
                         fontSize: "0.75rem",
@@ -604,31 +610,39 @@ export default function Landing() {
                   </div>
                 </>
               )}
-            </div>          
+            </div>
 
             <div style={footerBar}>
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-              </div>
+              <div
+                style={{ display: "flex", gap: 4, alignItems: "center" }}
+              ></div>
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 {regToken ? (
-                  <button style={primaryBtn} onClick={async () => {
-                    try {
-                      await navigator.clipboard.writeText(regToken);
-                    } catch {
-                      const el = document.createElement("textarea");
-                      el.value = regToken;
-                      document.body.appendChild(el);
-                      el.select();
-                      document.execCommand("copy");
-                      document.body.removeChild(el);
-                    }
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                  }}>
+                  <button
+                    style={primaryBtn}
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard.writeText(regToken);
+                      } catch {
+                        const el = document.createElement("textarea");
+                        el.value = regToken;
+                        document.body.appendChild(el);
+                        el.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(el);
+                      }
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    }}
+                  >
                     {copied ? t("register_copied") : t("register_copy")}
                   </button>
                 ) : (
-                  <button style={primaryBtn} onClick={handleRegister} disabled={regLoading}>
+                  <button
+                    style={primaryBtn}
+                    onClick={handleRegister}
+                    disabled={regLoading}
+                  >
                     {regLoading ? t("register_loading") : t("register_btn")}
                   </button>
                 )}
@@ -666,10 +680,24 @@ export default function Landing() {
             </div>
 
             <div style={contentArea}>
-              <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111", marginBottom: 4 }}>
+              <div
+                style={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  color: "#111",
+                  marginBottom: 4,
+                }}
+              >
                 Crea tu formulario en 4 pasos
               </div>
-              <p style={{ fontSize: "0.88rem", color: "rgba(0,0,0,0.5)", marginTop: 0, marginBottom: 16 }}>
+              <p
+                style={{
+                  fontSize: "0.88rem",
+                  color: "rgba(0,0,0,0.5)",
+                  marginTop: 0,
+                  marginBottom: 16,
+                }}
+              >
                 Sin servidores, sin configuración compleja. Solo GitHub.
               </p>
 
@@ -677,22 +705,89 @@ export default function Landing() {
                 {
                   n: "1",
                   title: "Haz Fork del repositorio",
-                  desc: <>Ve a <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>github.com/livrasand/jform</code> y pulsa <strong>Fork</strong> para copiarlo a tu cuenta.</>,
+                  desc: (
+                    <>
+                      Ve a{" "}
+                      <code
+                        style={{
+                          background: "#f0f0f2",
+                          padding: "1px 5px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        github.com/livrasand/jform
+                      </code>{" "}
+                      y pulsa <strong>Fork</strong> para copiarlo a tu cuenta.
+                    </>
+                  ),
                 },
                 {
                   n: "2",
                   title: "Crea tu carpeta",
-                  desc: <>Dentro de tu fork, navega a <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>/forms/</code> y crea una carpeta con tu nombre, ej. <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>/forms/tudominio/</code>.</>,
+                  desc: (
+                    <>
+                      Dentro de tu fork, navega a{" "}
+                      <code
+                        style={{
+                          background: "#f0f0f2",
+                          padding: "1px 5px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        /forms/
+                      </code>{" "}
+                      y crea una carpeta con tu nombre, ej.{" "}
+                      <code
+                        style={{
+                          background: "#f0f0f2",
+                          padding: "1px 5px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        /forms/tudominio/
+                      </code>
+                      .
+                    </>
+                  ),
                 },
                 {
                   n: "3",
                   title: "Escribe tu archivo .jform",
-                  desc: <>Crea un archivo <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>contacto.jform</code> con tus campos y cómo quieres recibir las respuestas.</>,
+                  desc: (
+                    <>
+                      Crea un archivo{" "}
+                      <code
+                        style={{
+                          background: "#f0f0f2",
+                          padding: "1px 5px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        contacto.jform
+                      </code>{" "}
+                      con tus campos y cómo quieres recibir las respuestas.
+                    </>
+                  ),
                 },
                 {
                   n: "4",
                   title: "Abre un Pull Request",
-                  desc: <>Haz commit y abre un PR. Al aprobarse, tu formulario queda en vivo en <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>jform.app/tudominio/contacto</code>.</>,
+                  desc: (
+                    <>
+                      Haz commit y abre un PR. Al aprobarse, tu formulario queda
+                      en vivo en{" "}
+                      <code
+                        style={{
+                          background: "#f0f0f2",
+                          padding: "1px 5px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        jform.app/tudominio/contacto
+                      </code>
+                      .
+                    </>
+                  ),
                 },
               ].map((step) => (
                 <div
@@ -706,10 +801,23 @@ export default function Landing() {
                 >
                   <div style={stepNum}>{step.n}</div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: "0.92rem", color: "#111", marginBottom: 3 }}>
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        fontSize: "0.92rem",
+                        color: "#111",
+                        marginBottom: 3,
+                      }}
+                    >
                       {step.title}
                     </div>
-                    <div style={{ fontSize: "0.87rem", color: "rgba(0,0,0,0.6)", lineHeight: 1.5 }}>
+                    <div
+                      style={{
+                        fontSize: "0.87rem",
+                        color: "rgba(0,0,0,0.6)",
+                        lineHeight: 1.5,
+                      }}
+                    >
                       {step.desc}
                     </div>
                   </div>
@@ -717,8 +825,24 @@ export default function Landing() {
               ))}
 
               <div style={{ ...stepCard, marginTop: 6 }}>
-                <div style={{ fontWeight: 700, fontSize: "0.88rem", marginBottom: 10, color: "#111" }}>
-                  Estructura básica de un <code style={{ background: "#f0f0f2", padding: "1px 5px", borderRadius: 4 }}>.jform</code>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: "0.88rem",
+                    marginBottom: 10,
+                    color: "#111",
+                  }}
+                >
+                  Estructura básica de un{" "}
+                  <code
+                    style={{
+                      background: "#f0f0f2",
+                      padding: "1px 5px",
+                      borderRadius: 4,
+                    }}
+                  >
+                    .jform
+                  </code>
                 </div>
                 <pre style={codeBlock}>{`{
   "title": "Mi Formulario",
@@ -731,10 +855,19 @@ export default function Landing() {
               </div>
 
               <div style={{ marginTop: 14 }}>
-                <div style={{ fontWeight: 700, fontSize: "0.88rem", color: "#111", marginBottom: 8 }}>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: "0.88rem",
+                    color: "#111",
+                    marginBottom: 8,
+                  }}
+                >
                   ¿Cómo quieres recibir las respuestas?
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
                   {[
                     {
                       icon: "📧",
@@ -764,19 +897,55 @@ export default function Landing() {
                         padding: "10px 14px",
                       }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                          marginBottom: 4,
+                        }}
+                      >
                         <span style={{ fontSize: 16 }}>{m.icon}</span>
-                        <span style={{ fontWeight: 700, fontSize: "0.88rem", color: "#111" }}>{m.label}</span>
+                        <span
+                          style={{
+                            fontWeight: 700,
+                            fontSize: "0.88rem",
+                            color: "#111",
+                          }}
+                        >
+                          {m.label}
+                        </span>
                       </div>
-                      <p style={{ margin: "0 0 6px", fontSize: "0.83rem", color: "rgba(0,0,0,0.55)" }}>{m.desc}</p>
-                      <pre style={{ ...codeBlock, marginTop: 0, fontSize: "0.78rem" }}>{m.code}</pre>
+                      <p
+                        style={{
+                          margin: "0 0 6px",
+                          fontSize: "0.83rem",
+                          color: "rgba(0,0,0,0.55)",
+                        }}
+                      >
+                        {m.desc}
+                      </p>
+                      <pre
+                        style={{
+                          ...codeBlock,
+                          marginTop: 0,
+                          fontSize: "0.78rem",
+                        }}
+                      >
+                        {m.code}
+                      </pre>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div
-                style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 16 }}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 8,
+                  marginTop: 16,
+                }}
               >
                 <button
                   style={primaryBtn}
