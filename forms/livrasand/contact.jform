@@ -1,0 +1,185 @@
+{
+  "$schema": "https://jform.vercel.app/schema.v1.json",
+  "form_id": "ultimate-demo-2026",
+  "settings": {
+    "language": "es",
+    "submit_button_text": "Enviar Respuestas",
+    "confirmation_message": "Thanks for submitting your contact info!"
+  },
+  "transport": {
+    "type": "email",
+    "destination": "jf_3a5af8ed6124935a75368a0616c826a7"
+  },
+  "theme": {
+    "font_family": "Inter, sans-serif",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@500&display=swap",
+    "page_background": "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070')",
+    "form_background": "rgba(255, 255, 255, 0.85)",
+    "colors": {
+      "primary_hex": "#0070f3",
+      "secondary_rgb": "rgb(255, 99, 71)",
+      "text_hsl": "hsl(210, 29%, 24%)",
+      "accent_hsv": "hsv(120, 100%, 50%)",
+      "border_cmyk": "cmyk(0%, 0%, 0%, 20%)"
+    }
+  },
+  "header": {
+    "cover_image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=2088",
+    "title": "Demo de Formulario JFORM",
+    "subtitle": "Demostración de todas las capacidades del protocolo open source y privacy-first.",
+    "title_font": "Oswald, sans-serif"
+  },
+  "elements": [
+    {
+      "id": "info_video",
+      "type": "video",
+      "url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "description": "Por favor, mira este video antes de comenzar."
+    },
+    {
+      "id": "sep1",
+      "type": "divider",
+      "spacing": 24,
+      "thickness": 2,
+      "color": "#e0e0e0"
+    },
+    {
+      "id": "gap1",
+      "type": "spacer",
+      "height": 40
+    },
+    {
+      "id": "sec1",
+      "type": "section",
+      "label": "Datos personales",
+      "description": "Completa tus datos"
+    },
+    {
+      "id": "q1_short",
+      "type": "text",
+      "label": "Respuesta corta",
+      "placeholder": "Escribe tu nombre...",
+      "required": true
+    },
+    {
+      "id": "q2_paragraph",
+      "type": "textarea",
+      "label": "Párrafo",
+      "placeholder": "Cuéntanos sobre tu filosofía open source...",
+      "rows": 4,
+      "required": false
+    },
+    {
+      "id": "q3_multiple_choice",
+      "type": "radio",
+      "label": "Varias opciones (Elige una)",
+      "required": true,
+      "options": [
+        { "value": "go", "label": "Go" },
+        { "value": "rust", "label": "Rust" },
+        { "value": "ts", "label": "TypeScript" }
+      ]
+    },
+    {
+      "id": "q4_checkboxes",
+      "type": "checkbox",
+      "label": "Casillas (Elige varias)",
+      "required": false,
+      "options": [
+        { "value": "privacy", "label": "Privacidad" },
+        { "value": "security", "label": "Seguridad" },
+        { "value": "performance", "label": "Rendimiento" }
+      ]
+    },
+    {
+      "id": "q5_dropdown",
+      "type": "select",
+      "label": "Desplegable",
+      "required": true,
+      "options": [
+        { "value": "linux", "label": "Linux" },
+        { "value": "macos", "label": "macOS" },
+        { "value": "windows", "label": "Windows" }
+      ]
+    },
+    {
+      "id": "q6_file",
+      "type": "file",
+      "label": "Subir archivos",
+      "description": "Sube tu avatar o llave GPG pública",
+      "accept": "image/png, .asc",
+      "max_size_mb": 5,
+      "required": false
+    },
+    {
+      "id": "mid_image",
+      "type": "image",
+      "url": "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1000",
+      "alt_text": "Computadora con código",
+      "caption": "Tómate un respiro, ya casi terminamos."
+    },
+    {
+      "id": "q7_linear_scale",
+      "type": "scale",
+      "label": "Escala lineal",
+      "description": "¿Qué tan importante es el open source para ti?",
+      "min": 1,
+      "max": 5,
+      "min_label": "Nada importante",
+      "max_label": "Vital",
+      "required": true
+    },
+    {
+      "id": "q8_rating",
+      "type": "rating",
+      "label": "Calificación",
+      "icon": "star",
+      "max_stars": 5,
+      "required": false
+    },
+    {
+      "id": "q9_radio_grid",
+      "type": "radio_grid",
+      "label": "Cuadrícula de varias opciones",
+      "description": "Evalúa las siguientes herramientas",
+      "required": true,
+      "rows": [
+        { "id": "r1", "label": "gitGost" },
+        { "id": "r2", "label": "CodeTrackr" }
+      ],
+      "columns": [
+        { "id": "c1", "label": "Malo" },
+        { "id": "c2", "label": "Regular" },
+        { "id": "c3", "label": "Excelente" }
+      ]
+    },
+    {
+      "id": "q10_checkbox_grid",
+      "type": "checkbox_grid",
+      "label": "Cuadrícula de casillas",
+      "description": "Indica qué lenguajes usas para cada área",
+      "required": false,
+      "rows": [
+        { "id": "r_backend", "label": "Backend" },
+        { "id": "r_frontend", "label": "Frontend" }
+      ],
+      "columns": [
+        { "id": "c_ts", "label": "TypeScript" },
+        { "id": "c_rust", "label": "Rust" },
+        { "id": "c_go", "label": "Go" }
+      ]
+    },
+    {
+      "id": "q11_date",
+      "type": "date",
+      "label": "Fecha de inicio del proyecto",
+      "required": true
+    },
+    {
+      "id": "q12_time",
+      "type": "time",
+      "label": "Hora del último commit",
+      "required": false
+    }
+  ]
+}

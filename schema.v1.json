@@ -1,0 +1,286 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JForm Schema v2",
+  "description": "Esquema de validacion para archivos .jform v2 — formularios descentralizados via GitHub con soporte de media, temas avanzados, grids y transporte flexible.",
+  "type": "object",
+  "required": ["title", "elements", "transport"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "URI del schema de validacion. Usar https://jform.vercel.app/schema.v2.json"
+    },
+    "form_id": {
+      "type": "string",
+      "description": "Identificador unico del formulario (slug, kebab-case recomendado)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Titulo del formulario"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripcion breve del formulario"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Configuracion general del formulario",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Codigo de idioma BCP 47 (ej. es, en, fr)",
+          "default": "en"
+        },
+        "submit_button_text": {
+          "type": "string",
+          "description": "Texto del boton de envio",
+          "default": "Submit"
+        },
+        "success_message": {
+          "type": "string",
+          "description": "Mensaje mostrado al usuario tras envio exitoso"
+        },
+        "allow_multiple_submissions": {
+          "type": "boolean",
+          "description": "Permite que un mismo usuario envie el formulario mas de una vez",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "transport": {
+      "type": "object",
+      "description": "Define como y donde se envian las respuestas del formulario",
+      "required": ["type"],
+      "oneOf": [
+        {
+          "title": "Webhook (POST a endpoint propio)",
+          "properties": {
+            "type": { "type": "string", "enum": ["webhook"] },
+            "destination": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL del endpoint que recibira el POST con las respuestas"
+            }
+          },
+          "required": ["type", "destination"],
+          "additionalProperties": false
+        },
+        {
+          "title": "Email relay (sin backend propio)",
+          "properties": {
+            "type": { "type": "string", "enum": ["email"] },
+            "destination_id": {
+              "type": "string",
+              "description": "Token opaco generado al registrarse en JFORM (jf_xxxxxxxx). El servidor lo resuelve al email del usuario internamente.",
+              "pattern": "^jf_[a-z0-9]+$"
+            }
+          },
+          "required": ["type", "destination_id"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "theme": {
+      "type": "object",
+      "description": "Personalizacion visual del formulario",
+      "properties": {
+        "font_family": {
+          "type": "string",
+          "description": "Familia tipografica CSS (ej. 'Inter, sans-serif')"
+        },
+        "google_fonts_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL de Google Fonts que se inyectara como <link> en el <head>. El frontend aplicara automaticamente font_family tras cargarlo."
+        },
+        "page_background": {
+          "type": "string",
+          "description": "Fondo de la pagina completa. Acepta color CSS o url('...') para imagen"
+        },
+        "form_background": {
+          "type": "string",
+          "description": "Fondo del contenedor del formulario. Acepta cualquier valor CSS valido (rgba, hex, gradiente)"
+        },
+        "colors": {
+          "type": "object",
+          "description": "Variables de color del formulario. El frontend convierte cmyk() y hsv() a RGB/HSL antes de inyectarlos como variables CSS.",
+          "properties": {
+            "primary_hex":    { "type": "string", "pattern": "^#[0-9a-fA-F]{3,8}$", "description": "Color primario en HEX" },
+            "secondary_rgb":  { "type": "string", "pattern": "^rgb\\(", "description": "Color secundario en formato rgb(r, g, b)" },
+            "text_hsl":       { "type": "string", "pattern": "^hsl\\(", "description": "Color de texto en formato hsl(h, s%, l%)" },
+            "accent_hsv":     { "type": "string", "pattern": "^hsv\\(", "description": "Color de acento en formato hsv(h, s%, v%) — el frontend lo convierte a HSL" },
+            "border_cmyk":    { "type": "string", "pattern": "^cmyk\\(", "description": "Color de borde en formato cmyk(c%, m%, y%, k%) — el frontend lo convierte a RGB" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "header": {
+      "type": "object",
+      "description": "Cabecera visual del formulario, renderizada antes de los elementos",
+      "properties": {
+        "cover_image": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL de imagen de portada (renderizada como banner)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Titulo principal del formulario mostrado al usuario"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Subtitulo o descripcion visible bajo el titulo"
+        },
+        "title_font": {
+          "type": "string",
+          "description": "Fuente especifica para el titulo (sobreescribe theme.font_family solo en el titulo)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "elements": {
+      "type": "array",
+      "description": "Lista ordenada de elementos del formulario. Puede contener campos de input, media (imagen/video) y elementos de layout.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador unico del elemento dentro del formulario"
+          },
+          "type": {
+            "type": "string",
+            "description": "Tipo de elemento",
+            "enum": [
+              "text", "email", "url", "number",
+              "textarea",
+              "radio", "checkbox", "select",
+              "radio_grid", "checkbox_grid",
+              "scale", "rating",
+              "date", "time",
+              "file",
+              "image", "video"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "description": "Etiqueta visible del campo (no requerida para image/video)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Texto de ayuda o descripcion secundaria del elemento"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Si el campo es obligatorio para el envio. Ignorado en tipos image y video.",
+            "default": false
+          },
+          "placeholder": {
+            "type": "string",
+            "description": "Texto de placeholder para tipos text, email, url, number, textarea"
+          },
+          "rows": {
+            "description": "Para textarea: numero de filas visibles. Para radio_grid/checkbox_grid: array de filas.",
+            "oneOf": [
+              { "type": "integer", "minimum": 1 },
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["id", "label"],
+                  "properties": {
+                    "id":    { "type": "string" },
+                    "label": { "type": "string" }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          },
+          "columns": {
+            "type": "array",
+            "description": "Columnas para radio_grid y checkbox_grid",
+            "items": {
+              "type": "object",
+              "required": ["id", "label"],
+              "properties": {
+                "id":    { "type": "string" },
+                "label": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "options": {
+            "type": "array",
+            "description": "Opciones para tipos radio, checkbox y select",
+            "items": {
+              "type": "object",
+              "required": ["value", "label"],
+              "properties": {
+                "value": { "type": "string" },
+                "label": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "min": {
+            "type": "number",
+            "description": "Valor minimo para type=scale o type=number"
+          },
+          "max": {
+            "type": "number",
+            "description": "Valor maximo para type=scale o type=number"
+          },
+          "min_label": {
+            "type": "string",
+            "description": "Etiqueta del extremo inferior para type=scale"
+          },
+          "max_label": {
+            "type": "string",
+            "description": "Etiqueta del extremo superior para type=scale"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icono para type=rating",
+            "enum": ["star", "heart", "thumb"]
+          },
+          "max_stars": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Numero maximo de estrellas/iconos para type=rating"
+          },
+          "accept": {
+            "type": "string",
+            "description": "MIME types o extensiones aceptadas para type=file (ej. 'image/png, .pdf')"
+          },
+          "max_size_mb": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Tamano maximo en MB para type=file"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL del recurso para type=image o type=video (YouTube embed, Vimeo, etc.)"
+          },
+          "alt_text": {
+            "type": "string",
+            "description": "Texto alternativo de accesibilidad para type=image"
+          },
+          "caption": {
+            "type": "string",
+            "description": "Pie de imagen o video para type=image o type=video"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
