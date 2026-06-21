@@ -1,0 +1,92 @@
+{
+  "$schema": "https://jform.vercel.app/schema.v2.json",
+  "form_id": "medium-sponsor-rewards",
+  "settings": {
+    "language": "en",
+    "submit_button_text": "Submit Details",
+    "confirmation_message": "Awesome! I've received your details and will add you to my next Medium posts. Thanks for supporting open source! 🖤"
+  },
+  "transport": {
+    "type": "email",
+    "destination": "jf_3a5af8ed6124935a75368a0616c826a7"
+  },
+  "theme": {
+    "font_family": "Inter, sans-serif",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@500&display=swap",
+    "page_background": "#0d1117",
+    "form_background": "#161b22",
+    "colors": {
+      "primary_hex": "#2ea043",
+      "secondary_rgb": "rgb(88, 166, 255)",
+      "text_hsl": "hsl(0, 0%, 100%)",
+      "border_cmyk": "cmyk(0%, 0%, 0%, 60%)"
+    }
+  },
+  "header": {
+    "title": "Sponsor Rewards: Medium",
+    "subtitle": "Thank you for sponsoring livrasand! Please provide the name or logo you want me to feature on my Medium posts.",
+    "title_font": "Fira Code, monospace"
+  },
+  "elements": [
+    {
+      "id": "github_username",
+      "type": "text",
+      "label": "Your GitHub Username",
+      "placeholder": "@username",
+      "required": true
+    },
+    {
+      "id": "reward_tier",
+      "type": "select",
+      "label": "Which tier did you sponsor?",
+      "required": true,
+      "options": [
+        { "value": "10", "label": "$10 - Buy me a sandwich!" },
+        { "value": "20", "label": "$20 - Keep the commits flowing!" },
+        { "value": "50", "label": "$50 - Making my work a little easier!" }
+      ]
+    },
+    {
+      "id": "sep_1",
+      "type": "divider",
+      "spacing": 24,
+      "thickness": 1,
+      "color": "#30363d"
+    },
+    {
+      "id": "display_preference",
+      "type": "radio",
+      "label": "What should I display on the posts?",
+      "required": true,
+      "options": [
+        { "value": "name", "label": "Just my Name / Username" },
+        { "value": "logo", "label": "My Logo" }
+      ]
+    },
+    {
+      "id": "display_name",
+      "type": "text",
+      "label": "Name to display",
+      "description": "Fill this out if you chose 'Name' above.",
+      "placeholder": "e.g., John Doe or Company Inc.",
+      "required": false
+    },
+    {
+      "id": "sponsor_logo",
+      "type": "file",
+      "label": "Upload your logo",
+      "description": "High-res PNG or SVG with transparent background preferred (Max 5MB).",
+      "accept": "image/png, image/svg+xml, image/jpeg",
+      "max_size_mb": 5,
+      "required": false
+    },
+    {
+      "id": "target_url",
+      "type": "url",
+      "label": "Target Link",
+      "description": "Where should your name/logo link to?",
+      "placeholder": "https://yourwebsite.com",
+      "required": true
+    }
+  ]
+}
