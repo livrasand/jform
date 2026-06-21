@@ -1,5 +1,5 @@
 {
-  "$schema": "https://jform.vercel.app/schema.v2.json",
+  "$schema": "https://jform.livrasand.com/schema.v1.json",
   "form_id": "medium-sponsor-rewards",
   "settings": {
     "language": "en",
@@ -17,9 +17,10 @@
     "form_background": "#161b22",
     "colors": {
       "primary_hex": "#2ea043",
-      "secondary_rgb": "rgb(88, 166, 255)",
+      "secondary_rgb": "rgb(139, 148, 158)",
       "text_hsl": "hsl(0, 0%, 100%)",
-      "border_cmyk": "cmyk(0%, 0%, 0%, 60%)"
+      "accent_hsv": "hsv(130, 100%, 50%)",
+      "border_cmyk": "cmyk(0%, 0%, 0%, 30%)"
     }
   },
   "header": {
