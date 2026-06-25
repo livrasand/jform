@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useI18n } from "../i18n.jsx";
-import { esc, attr } from "../utils.js";
 import Nav from "../components/Nav.jsx";
 
 export default function FormPreview() {
@@ -29,7 +28,8 @@ export default function FormPreview() {
         theme.form_background || theme.colors.card_bg_hex || "#ffffff",
       );
       // Agregar variables faltantes para descripciones y bordes en modo oscuro
-      const textColor = theme.colors.text_hex || theme.colors.text_hsl || "#1c1414";
+      const textColor =
+        theme.colors.text_hex || theme.colors.text_hsl || "#1c1414";
       r.style.setProperty("--text-2", "rgba(240, 246, 252, 0.7)");
       r.style.setProperty("--text-3", "rgba(240, 246, 252, 0.5)");
       r.style.setProperty("--border", "rgba(255,255,255,0.1)");
@@ -145,9 +145,33 @@ export default function FormPreview() {
             }}
           >
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57", display: "inline-block" }} />
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#febc2e", display: "inline-block" }} />
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840", display: "inline-block" }} />
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#ff5f57",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#febc2e",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#28c840",
+                  display: "inline-block",
+                }}
+              />
             </span>
             <span
               style={{
@@ -194,7 +218,8 @@ export default function FormPreview() {
               border: "none",
               outline: "none",
               padding: "20px 20px",
-              fontFamily: "'Fira Code', 'Cascadia Code', 'Courier New', monospace",
+              fontFamily:
+                "'Fira Code', 'Cascadia Code', 'Courier New', monospace",
               fontSize: "0.8rem",
               lineHeight: 1.75,
               color: "#c9d1d9",
@@ -209,9 +234,7 @@ export default function FormPreview() {
         {/* Panel derecho: preview */}
         <div
           style={{
-            background: schema?.theme
-              ? "var(--bg, #fffafa)"
-              : "#f5f5f7",
+            background: schema?.theme ? "var(--bg, #fffafa)" : "#f5f5f7",
             overflowY: "auto",
             display: "flex",
             flexDirection: "column",
@@ -241,7 +264,9 @@ export default function FormPreview() {
                   filter: "invert(1) grayscale(1)",
                 }}
               />
-              <p style={{ fontSize: "0.85rem", lineHeight: 1.6, maxWidth: 260 }}>
+              <p
+                style={{ fontSize: "0.85rem", lineHeight: 1.6, maxWidth: 260 }}
+              >
                 Escribe o pega tu JSON{" "}
                 <code
                   style={{
@@ -263,15 +288,21 @@ export default function FormPreview() {
             <>
               <div
                 className="form-wrap"
-                style={{ background: formBg, border: formBorder, width: "100%", maxWidth: 560 }}
+                style={{
+                  background: formBg,
+                  border: formBorder,
+                  width: "100%",
+                  maxWidth: 560,
+                }}
               >
                 {schema.header && schema.header.title ? (
-                  <h2>{esc(schema.header.title)}</h2>
+                  <h2>{schema.header.title}</h2>
                 ) : (
-                  <h2>{esc(schema.title)}</h2>
+                  <h2>{schema.title}</h2>
                 )}
-                {(schema.header && schema.header.subtitle) || schema.description ? (
-                  <p>{esc(schema.header?.subtitle || schema.description)}</p>
+                {(schema.header && schema.header.subtitle) ||
+                schema.description ? (
+                  <p>{schema.header?.subtitle || schema.description}</p>
                 ) : null}
                 <form
                   id="f-preview"
@@ -298,23 +329,40 @@ export default function FormPreview() {
                     }
 
                     if (f.type === "spacer") {
-                      return <div key={f.id} style={{ height: f.height || 24 }} />;
+                      return (
+                        <div key={f.id} style={{ height: f.height || 24 }} />
+                      );
                     }
 
                     if (f.type === "section") {
                       return (
                         <div
                           key={f.id}
-                          style={{ marginBottom: 8, marginTop: f.margin_top || 8 }}
+                          style={{
+                            marginBottom: 8,
+                            marginTop: f.margin_top || 8,
+                          }}
                         >
                           {f.label && (
-                            <h3 style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 4px" }}>
-                              {esc(f.label)}
+                            <h3
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: 700,
+                                margin: "0 0 4px",
+                              }}
+                            >
+                              {f.label}
                             </h3>
                           )}
                           {f.description && (
-                            <p style={{ fontSize: "0.83rem", color: "var(--text-2)", margin: 0 }}>
-                              {esc(f.description)}
+                            <p
+                              style={{
+                                fontSize: "0.83rem",
+                                color: "var(--text-2)",
+                                margin: 0,
+                              }}
+                            >
+                              {f.description}
                             </p>
                           )}
                         </div>
@@ -333,13 +381,24 @@ export default function FormPreview() {
                           ) : (
                             <iframe
                               src={f.url}
-                              style={{ width: "100%", minHeight: 300, borderRadius: 8, border: "none" }}
+                              style={{
+                                width: "100%",
+                                minHeight: 300,
+                                borderRadius: 8,
+                                border: "none",
+                              }}
                               allowFullScreen
                             />
                           )}
                           {f.caption && (
-                            <p style={{ fontSize: "0.85rem", color: "var(--text-2)", marginTop: 8 }}>
-                              {esc(f.caption)}
+                            <p
+                              style={{
+                                fontSize: "0.85rem",
+                                color: "var(--text-2)",
+                                marginTop: 8,
+                              }}
+                            >
+                              {f.caption}
                             </p>
                           )}
                         </div>
@@ -347,7 +406,10 @@ export default function FormPreview() {
                     }
 
                     const borderStyle =
-                      f.border_top || f.border_bottom || f.border_left || f.border_right
+                      f.border_top ||
+                      f.border_bottom ||
+                      f.border_left ||
+                      f.border_right
                         ? {
                             borderTop: f.border_top || "none",
                             borderBottom: f.border_bottom || "none",
@@ -358,13 +420,21 @@ export default function FormPreview() {
                         : {};
 
                     return (
-                      <div className="field-group" key={f.id} style={borderStyle}>
+                      <div
+                        className="field-group"
+                        key={f.id}
+                        style={borderStyle}
+                      >
                         <label htmlFor={f.id}>
-                          {esc(f.label)}
-                          {f.required ? <span className="required-mark">*</span> : ""}
+                          {f.label}
+                          {f.required ? (
+                            <span className="required-mark">*</span>
+                          ) : (
+                            ""
+                          )}
                         </label>
                         {f.description && (
-                          <span className="description">{esc(f.description)}</span>
+                          <span className="description">{f.description}</span>
                         )}
                         {renderField(f)}
                       </div>
@@ -389,18 +459,36 @@ export default function FormPreview() {
                 <p style={{ margin: "0 0 6px" }}>
                   {t("footer_disclaimer")}
                   {" · "}
-                  <a href="/terms" style={{ color: "var(--text)", textDecoration: "underline" }}>
+                  <a
+                    href="/terms"
+                    style={{
+                      color: "var(--text)",
+                      textDecoration: "underline",
+                    }}
+                  >
                     {t("footer_terms")}
                   </a>
                   {" · "}
-                  <a href="/privacy" style={{ color: "var(--text)", textDecoration: "underline" }}>
+                  <a
+                    href="/privacy"
+                    style={{
+                      color: "var(--text)",
+                      textDecoration: "underline",
+                    }}
+                  >
                     {t("footer_privacy")}
                   </a>
                 </p>
                 <img
                   src="/jform-logo.svg"
                   alt="JFORM"
-                  style={{ height: 32, opacity: 0.5, filter: "invert(1)", display: "block", margin: "0 auto" }}
+                  style={{
+                    height: 32,
+                    opacity: 0.5,
+                    filter: "invert(1)",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
                 />
               </div>
             </>
@@ -419,12 +507,20 @@ export default function FormPreview() {
               }}
             >
               <div style={{ fontSize: "2.5rem", marginBottom: 12 }}>✓</div>
-              <h3 style={{ color: "var(--accent)", fontSize: "1.2rem", marginBottom: 8 }}>
+              <h3
+                style={{
+                  color: "var(--accent)",
+                  fontSize: "1.2rem",
+                  marginBottom: 8,
+                }}
+              >
                 {schema?.settings?.confirmation_message
-                  ? esc(schema.settings.confirmation_message)
+                  ? schema.settings.confirmation_message
                   : t("form_ok_title")}
               </h3>
-              <p style={{ color: "var(--text-2)", lineHeight: 1.6 }}>{t("form_ok_desc")}</p>
+              <p style={{ color: "var(--text-2)", lineHeight: 1.6 }}>
+                {t("form_ok_desc")}
+              </p>
               <button
                 type="button"
                 onClick={() => setState("form")}
@@ -444,7 +540,7 @@ function RatingField({ f }) {
   const [hovered, setHovered] = useState(null);
   const [selected, setSelected] = useState(null);
   const stars = f.max_stars || 5;
-  const name = attr(f.id);
+  const name = f.id;
 
   return (
     <div className="rating-group">
@@ -453,7 +549,8 @@ function RatingField({ f }) {
           key={v}
           className="rating-star"
           style={{
-            color: v <= (hovered ?? selected ?? 0) ? "#f5a623" : "var(--border)",
+            color:
+              v <= (hovered ?? selected ?? 0) ? "#f5a623" : "var(--border)",
           }}
           onMouseEnter={() => setHovered(v)}
           onMouseLeave={() => setHovered(null)}
@@ -476,17 +573,17 @@ function RatingField({ f }) {
 }
 
 function renderField(f) {
-  const id = attr(f.id);
-  const name = attr(f.id);
-  const placeholder = attr(f.placeholder || "");
+  const id = f.id;
+  const name = f.id;
+  const placeholder = f.placeholder || "";
 
   if (f.type === "select") {
     return (
       <select id={id} name={name} required={f.required || false}>
         {f.options && f.options.length > 0
           ? f.options.map((o, i) => (
-              <option key={i} value={attr(o.value)}>
-                {esc(o.label)}
+              <option key={i} value={o.value}>
+                {o.label}
               </option>
             ))
           : null}
@@ -523,10 +620,10 @@ function renderField(f) {
             <input
               type="radio"
               name={name}
-              value={attr(o.value)}
+              value={o.value}
               required={f.required || false}
             />
-            {esc(o.label)}
+            {o.label}
           </label>
         ))}
       </div>
@@ -537,8 +634,8 @@ function renderField(f) {
       <div className="option-group">
         {(f.options || []).map((o, i) => (
           <label key={i} className="option-item">
-            <input type="checkbox" name={`${name}[]`} value={attr(o.value)} />
-            {esc(o.label)}
+            <input type="checkbox" name={`${name}[]`} value={o.value} />
+            {o.label}
           </label>
         ))}
       </div>
@@ -550,14 +647,19 @@ function renderField(f) {
     const steps = Array.from({ length: max - min + 1 }, (_, i) => min + i);
     return (
       <div className="scale-group">
-        {f.min_label && <span className="scale-label">{esc(f.min_label)}</span>}
+        {f.min_label && <span className="scale-label">{f.min_label}</span>}
         {steps.map((v) => (
           <label key={v} className="scale-option">
-            <input type="radio" name={name} value={v} required={f.required || false} />
+            <input
+              type="radio"
+              name={name}
+              value={v}
+              required={f.required || false}
+            />
             {v}
           </label>
         ))}
-        {f.max_label && <span className="scale-label">{esc(f.max_label)}</span>}
+        {f.max_label && <span className="scale-label">{f.max_label}</span>}
       </div>
     );
   }
@@ -573,14 +675,14 @@ function renderField(f) {
             <tr>
               <th></th>
               {(f.columns || []).map((col) => (
-                <th key={col.id}>{esc(col.label)}</th>
+                <th key={col.id}>{col.label}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {(f.rows || []).map((row) => (
               <tr key={row.id}>
-                <td>{esc(row.label)}</td>
+                <td>{row.label}</td>
                 {(f.columns || []).map((col) => (
                   <td key={col.id}>
                     <input
@@ -604,7 +706,7 @@ function renderField(f) {
   }
   return (
     <input
-      type={attr(f.type)}
+      type={f.type}
       id={id}
       name={name}
       placeholder={placeholder}

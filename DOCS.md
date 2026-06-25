@@ -115,7 +115,7 @@ The user defines in their `.jform` file how they want to receive information, ch
 
 Schema v2 introduces full support for:
 
-- **All field types**: text, email, url, number, textarea, radio, checkbox, select, radio_grid, checkbox_grid, scale, rating, date, time, file, image, video
+- **All field types**: text, email, url, number, textarea, radio, checkbox, select, radio_grid, checkbox_grid, scale, rating, date, time, file, image, video, image_selection, csat, cta
 - **Advanced themes**: Support for HEX, RGB, HSL, HSV, and CMYK
 - **Google Fonts**: Dynamic font injection
 - **Custom header**: Cover image, title, subtitle, specific font
@@ -423,6 +423,7 @@ Every element requires a unique `id` and a `type`. Most field types also accept:
 | `border_bottom` | string | CSS border for the bottom side |
 | `border_left` | string | CSS border for the left side |
 | `border_right` | string | CSS border for the right side |
+| `hide_on_mobile` | boolean | Whether the element should be hidden on mobile screens (width < 640px). Default: false |
 
 #### `text`
 Single-line text input.
@@ -480,15 +481,34 @@ Multiple choices from a list.
 ```
 
 #### `scale`
-Linear scale between two numbers.
+Linear scale between two numbers with colored labels and optional segment bars.
 ```json
 {
   "id": "importance", "type": "scale", "label": "How important?",
   "min": 1, "max": 5,
   "min_label": "Not at all", "max_label": "Very much",
+  "min_label_color": "#e53935",
+  "max_label_color": "#43a047",
+  "scale_colors": [
+    { "color": "oklch(94.1% .03 12.58)", "pct": 60 },
+    { "color": "oklch(95.4% .038 75.164)", "pct": 20 },
+    { "color": "oklch(95% .052 163.051)", "pct": 20 }
+  ],
+  "scale_style": "default",
   "required": true
 }
 ```
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `min` | `1` | Minimum value |
+| `max` | `5` | Maximum value |
+| `min_label` | — | Text shown on the left above the numbers |
+| `max_label` | — | Text shown on the right above the numbers |
+| `min_label_color` | `var(--text-2)` | Custom color for the left label |
+| `max_label_color` | `var(--text-2)` | Custom color for the right label |
+| `scale_colors` | — | Array of color segments. Each object has `color` (any valid CSS color) and `pct` (percentage of options that get that color). Colors distribute proportionally across the range — e.g. 60/20/20 with 5 options yields 3 bars in color A, 1 in B, 1 in C. Percentages are normalized to 100% automatically. |
+| `scale_style` | `"default"` | Visual style for the options: `"default"` (colored top bar via `::before`), `"bordered"` (colored border around the whole option), or `"borderless"` (no border, subtle background on select). |
 
 #### `rating`
 Star rating.
@@ -564,6 +584,64 @@ Embeds a video (YouTube, Vimeo, etc.) inside the form.
   "description": "Watch this before continuing."
 }
 ```
+
+#### `image_selection`
+Image selector where respondents can choose from a set of predefined images. Supports single (radio) or multiple (checkbox) selection.
+```json
+{
+  "id": "img_choice", "type": "image_selection",
+  "label": "Select an image",
+  "description": "Choose your preferred option",
+  "selection_mode": "single",
+  "required": false,
+  "image_options": [
+    { "value": "opt1", "label": "Option A", "url": "https://example.com/img1.jpg" },
+    { "value": "opt2", "label": "Option B", "url": "https://example.com/img2.jpg" }
+  ]
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `selection_mode` | `"single"` for radio-style (one image) or `"multiple"` for checkbox-style (multiple images) |
+| `image_options` | Array of image options. Each must have `value` (identifier), `label` (display text), and `url` (image URL) |
+
+#### `csat`
+Customer Satisfaction (CSAT) rating with emoji scale. Respondents select from a scale of emoticons to rate their satisfaction.
+```json
+{
+  "id": "satisfaction", "type": "csat",
+  "label": "How satisfied are you?",
+  "description": "Rate your experience",
+  "scale": 5,
+  "required": false,
+  "csat_labels": ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"]
+}
+```
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `scale` | `5` | Number of scale options (3-10) |
+| `csat_labels` | — | Array of labels for each scale option. Must match the length of `scale` |
+
+#### `cta`
+Call to Action button that links to an external URL. Displays a styled button with customizable text and link.
+```json
+{
+  "id": "reserve", "type": "cta",
+  "label": "Book your appointment",
+  "button_text": "Reserve interview",
+  "button_url": "https://calendly.com/example",
+  "open_in_new_tab": true
+}
+```
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `button_text` | — | Text displayed on the button |
+| `button_url` | — | URL the button links to |
+| `button_style` | `primary` | Button style: `"primary"` (accent color) or `"secondary"` (gray) |
+| `open_in_new_tab` | `true` | Whether the link opens in a new tab |
 
 #### `divider`
 Horizontal separator line.

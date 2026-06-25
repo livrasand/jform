@@ -9,6 +9,10 @@ export default function Landing() {
   const { t } = useI18n();
   const [showRegister, setShowRegister] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+
+  function handleKeyDown(e) {
+    if (e.key === "Escape") closeModals();
+  }
   const [email, setEmail] = useState("");
   const [github, setGithub] = useState("");
   const [pgpPublicKey, setPgpPublicKey] = useState("");
@@ -297,11 +301,12 @@ export default function Landing() {
     border: "none",
     cursor: "pointer",
     fontWeight: 700,
-    fontSize: "0.92rem",
+    fontSize: "clamp(0.85rem, 1.5vw, 0.95rem)",
     fontFamily: "inherit",
     display: "inline-flex",
     alignItems: "center",
     gap: 6,
+    whiteSpace: "nowrap",
     boxShadow: "0 4px 14px rgba(0,0,0,0.28)",
   };
 
@@ -313,17 +318,69 @@ export default function Landing() {
     border: "1px solid rgba(0,0,0,0.1)",
     cursor: "pointer",
     fontWeight: 600,
-    fontSize: "0.9rem",
+    fontSize: "clamp(0.8rem, 1.5vw, 0.92rem)",
     fontFamily: "inherit",
     boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
   };
 
   return (
     <>
+      <style>{`
+:focus-visible {
+  outline: 2px solid #8d7dca;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .hero-container {
+    left: 16px !important;
+    right: 16px !important;
+    max-width: 100% !important;
+    top: 64px !important;
+  }
+  .hero-container h1 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+  }
+  .hero-buttons {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .hero-buttons .nav-cta {
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+  }
+  .hero-buttons .nav-cta--outline {
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  .hero-buttons .nav-cta--primary {
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  .modal-content {
+    padding: 12px 14px !important;
+  }
+  .modal-box {
+    padding: 6px !important;
+  }
+  /* Register modal en mobile */
+  .field-group textarea {
+    font-size: 16px !important;
+  }
+  .field-group input {
+    font-size: 16px !important;
+  }
+}
+`}</style>
       <Nav />
 
       {/* Texto grande tipo hero — agregado sin tocar el diseño existente */}
       <div
+        className="hero-container"
         style={{
           position: "fixed",
           top: "92px", // por debajo del nav
@@ -337,37 +394,67 @@ export default function Landing() {
         <h1
           style={{
             margin: 0,
-            fontWeight: 600,
-            lineHeight: 1.03,
-            color: "rgba(255,255,255,0.95)",
-            fontSize: "clamp(1.1rem, 2.8vw, 3.2rem)",
-            letterSpacing: "-0.02em",
-            marginBottom: 6,
-            // para evitar que el texto se superponga con el botón central en pantallas pequeñas
-            maxWidth: "60ch",
+            fontWeight: 700,
+            lineHeight: 1.08,
+            color: "rgba(255,255,255,0.97)",
+            fontSize: "clamp(1.9rem, 4vw, 4.2rem)",
+            letterSpacing: "-0.03em",
+            marginBottom: 14,
+            maxWidth: "22ch",
           }}
         >
-          JFORM
-          <span
-            style={{
-              fontWeight: 600,
-              color: "rgba(255,255,255,0.55)",
-              fontSize: "clamp(1.1rem, 2.8vw, 3.2rem)",
-            }}
-          >
-            {"\u00A0"}
-            {t("hero_desc")}
-          </span>
+          {t("hero_headline")}
         </h1>
 
+        <p
+          style={{
+            margin: 0,
+            fontWeight: 400,
+            lineHeight: 1.55,
+            color: "rgba(226,232,240,0.85)",
+            fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
+            maxWidth: "48ch",
+            marginBottom: 8,
+          }}
+        >
+          {t("hero_desc")}
+        </p>
+
+        <p
+          style={{
+            margin: 0,
+            color: "rgba(255,250,250,0.55)",
+            fontSize: "clamp(0.85rem, 1.1vw, 0.97rem)",
+            lineHeight: 1.65,
+            maxWidth: "50ch",
+            marginBottom: 24,
+          }}
+        >
+          {t("hero_sub")}
+        </p>
+
         <div
+          className="hero-buttons"
           style={{
             display: "flex",
             gap: 12,
-            marginTop: 24,
             pointerEvents: "auto",
           }}
         >
+          <button
+            type="button"
+            className="nav-cta nav-cta--primary"
+            onClick={() => setShowRegister(true)}
+          >
+            {t("nav_cta")}
+          </button>
+          <button
+            type="button"
+            className="nav-cta nav-cta--outline"
+            onClick={() => navigate("/livrasand/contact")}
+          >
+            {t("nav_demo")}
+          </button>
           <a
             className="nav-cta"
             href="https://github.com/livrasand/jform/blob/master/DOCS.md"
@@ -376,15 +463,6 @@ export default function Landing() {
           >
             {t("nav_register")}
           </a>
-          <button
-            className="nav-cta nav-cta--outline"
-            onClick={() => navigate("/livrasand/contact")}
-          >
-            {t("nav_demo")}
-          </button>
-          <button className="nav-cta" onClick={() => setShowRegister(true)}>
-            {t("nav_cta")}
-          </button>
         </div>
       </div>
 
@@ -403,7 +481,7 @@ export default function Landing() {
           axesHelper="off"
           bgColor1="#000000"
           bgColor2="#000000"
-          brightness={0.3}
+          brightness={0.18}
           cAzimuthAngle={180}
           cDistance={2.8}
           cPolarAngle={80}
@@ -434,9 +512,9 @@ export default function Landing() {
           shader="defaults"
           type="waterPlane"
           uAmplitude={0}
-          uDensity={1.5}
+          uDensity={3}
           uFrequency={0}
-          uSpeed={0.3}
+          uSpeed={0.15}
           uStrength={1.5}
           uTime={8}
           wireframe={false}
@@ -446,12 +524,16 @@ export default function Landing() {
       {/* Modal: Registro / Relay de email */}
       {showRegister && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("register_title")}
           style={modalOverlay}
+          onKeyDown={handleKeyDown}
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModals();
           }}
         >
-          <div style={modalBox}>
+          <div className="modal-box" style={modalBox}>
             <div style={modalHeader}>
               <div
                 style={{
@@ -464,13 +546,13 @@ export default function Landing() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <button style={closeBtn} onClick={closeModals}>
+                <button type="button" aria-label="Cerrar" style={closeBtn} onClick={closeModals}>
                   ✕
                 </button>
               </div>
             </div>
 
-            <div style={contentArea}>
+            <div className="modal-content" style={contentArea}>
               {regToken ? (
                 <>
                   <div style={{ display: "flex", flexDirection: "column" }}>
@@ -619,6 +701,7 @@ export default function Landing() {
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 {regToken ? (
                   <button
+                    type="button"
                     style={primaryBtn}
                     onClick={async () => {
                       try {
@@ -639,6 +722,7 @@ export default function Landing() {
                   </button>
                 ) : (
                   <button
+                    type="button"
                     style={primaryBtn}
                     onClick={handleRegister}
                     disabled={regLoading}
@@ -655,12 +739,16 @@ export default function Landing() {
       {/* Modal: Instrucciones para crear un formulario */}
       {showInstructions && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Crear formulario"
           style={modalOverlay}
+          onKeyDown={handleKeyDown}
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModals();
           }}
         >
-          <div style={modalBox}>
+          <div className="modal-box" style={modalBox}>
             <div style={modalHeader}>
               <div
                 style={{
@@ -673,13 +761,13 @@ export default function Landing() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <button style={closeBtn} onClick={closeModals}>
+                <button type="button" aria-label="Cerrar" style={closeBtn} onClick={closeModals}>
                   ✕
                 </button>
               </div>
             </div>
 
-            <div style={contentArea}>
+            <div className="modal-content" style={contentArea}>
               <div
                 style={{
                   fontSize: "1.1rem",
@@ -948,6 +1036,7 @@ export default function Landing() {
                 }}
               >
                 <button
+                  type="button"
                   style={primaryBtn}
                   onClick={() => {
                     /* next: generate workflow */

@@ -1,10 +1,10 @@
 {
   "$schema": "https://jform.livrasand.com/schema.v1.json",
-  "form_id": "ultimate-demo-2026",
+  "form_id": "jform-showcase-2026",
   "settings": {
     "language": "es",
-    "submit_button_text": "Enviar Respuestas",
-    "confirmation_message": "Thanks for submitting your contact info!"
+    "submit_button_text": "Enviar respuestas",
+    "confirmation_message": "¡Gracias! Tus respuestas fueron enviadas directamente sin pasar por ningún servidor de terceros."
   },
   "transport": {
     "type": "email",
@@ -12,174 +12,339 @@
   },
   "theme": {
     "font_family": "Inter, sans-serif",
-    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@500&display=swap",
-    "page_background": "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070')",
-    "form_background": "rgba(255, 255, 255, 0.85)",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap",
+    "page_background": "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072')",
+    "form_background": "rgba(255, 255, 255, 0.92)",
     "colors": {
-      "primary_hex": "#0070f3",
-      "secondary_rgb": "rgb(255, 99, 71)",
-      "text_hsl": "hsl(210, 29%, 24%)",
-      "accent_hsv": "hsv(120, 100%, 50%)",
-      "border_cmyk": "cmyk(0%, 0%, 0%, 20%)"
+      "primary_hex": "#6366f1",
+      "accent_hsv": "hsv(234, 72%, 95%)",
+      "text_hsl": "hsl(224, 20%, 18%)",
+      "border_cmyk": "cmyk(0%, 0%, 0%, 14%)"
     }
   },
   "header": {
-    "cover_image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=2088",
-    "title": "Demo de Formulario JFORM",
-    "subtitle": "Demostración de todas las capacidades del protocolo open source y privacy-first.",
-    "title_font": "Oswald, sans-serif"
+    "cover_image": "https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=2074",
+    "title": "Todo lo que JFORM puede hacer",
+    "subtitle": "Un formulario que demuestra cada tipo de campo disponible en el protocolo. Privado, open source y sin servidores propios.",
+    "title_font": "Syne, sans-serif"
   },
   "elements": [
     {
-      "id": "info_video",
+      "id": "intro_video",
       "type": "video",
-      "url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "description": "Por favor, mira este video antes de comenzar."
+      "url": "https://www.youtube.com/embed/aqz-KE-bpKQ",
+      "description": "JFORM en 60 segundos — cómo funciona el protocolo."
     },
     {
-      "id": "sep1",
+      "id": "div0",
       "type": "divider",
-      "spacing": 24,
-      "thickness": 2,
-      "color": "#e0e0e0"
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
     },
+
     {
-      "id": "gap1",
-      "type": "spacer",
-      "height": 40
-    },
-    {
-      "id": "sec1",
+      "id": "sec_text",
       "type": "section",
-      "label": "Datos personales",
-      "description": "Completa tus datos"
+      "label": "① Campos de texto",
+      "description": "text · textarea · email · url · number"
     },
     {
-      "id": "q1_short",
+      "id": "q_name",
       "type": "text",
-      "label": "Respuesta corta",
-      "placeholder": "Escribe tu nombre...",
+      "label": "Tu nombre completo",
+      "placeholder": "Ej. Ada Lovelace",
       "required": true
     },
     {
-      "id": "q2_paragraph",
+      "id": "q_email",
+      "type": "text",
+      "label": "Correo electrónico",
+      "placeholder": "tu@correo.com",
+      "required": true
+    },
+    {
+      "id": "q_bio",
       "type": "textarea",
-      "label": "Párrafo",
-      "placeholder": "Cuéntanos sobre tu filosofía open source...",
-      "rows": 4,
+      "label": "¿Por qué te interesa JFORM?",
+      "placeholder": "Cuéntanos en tus propias palabras...",
+      "rows": 3,
       "required": false
     },
     {
-      "id": "q3_multiple_choice",
+      "id": "q_website",
+      "type": "text",
+      "label": "Sitio web o repositorio (opcional)",
+      "placeholder": "https://github.com/tu-usuario",
+      "required": false
+    },
+
+    {
+      "id": "div1",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
+    },
+    {
+      "id": "sec_choice",
+      "type": "section",
+      "label": "② Selección de opciones",
+      "description": "radio · checkbox · select"
+    },
+    {
+      "id": "q_lang",
       "type": "radio",
-      "label": "Varias opciones (Elige una)",
+      "label": "¿Cuál es tu lenguaje principal?",
       "required": true,
       "options": [
-        { "value": "go", "label": "Go" },
+        { "value": "ts", "label": "TypeScript" },
         { "value": "rust", "label": "Rust" },
-        { "value": "ts", "label": "TypeScript" }
+        { "value": "go", "label": "Go" },
+        { "value": "python", "label": "Python" },
+        { "value": "other", "label": "Otro" }
       ]
     },
     {
-      "id": "q4_checkboxes",
+      "id": "q_values",
       "type": "checkbox",
-      "label": "Casillas (Elige varias)",
+      "label": "¿Qué priorizas en un proyecto? (elige todos los que apliquen)",
       "required": false,
       "options": [
-        { "value": "privacy", "label": "Privacidad" },
-        { "value": "security", "label": "Seguridad" },
-        { "value": "performance", "label": "Rendimiento" }
+        { "value": "privacy", "label": "Privacidad por diseño" },
+        { "value": "oss", "label": "Open source" },
+        { "value": "perf", "label": "Rendimiento" },
+        { "value": "dx", "label": "Developer experience" },
+        { "value": "zero_deps", "label": "Cero dependencias" }
       ]
     },
     {
-      "id": "q5_dropdown",
+      "id": "q_os",
       "type": "select",
-      "label": "Desplegable",
+      "label": "Sistema operativo principal",
       "required": true,
       "options": [
         { "value": "linux", "label": "Linux" },
         { "value": "macos", "label": "macOS" },
-        { "value": "windows", "label": "Windows" }
+        { "value": "windows", "label": "Windows" },
+        { "value": "bsd", "label": "BSD" }
       ]
     },
+
     {
-      "id": "q6_file",
-      "type": "file",
-      "label": "Subir archivos",
-      "description": "Sube tu avatar o llave GPG pública",
-      "accept": "image/png, .asc",
-      "max_size_mb": 5,
-      "required": false
+      "id": "div2",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
     },
     {
-      "id": "mid_image",
-      "type": "image",
-      "url": "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1000",
-      "alt_text": "Computadora con código",
-      "caption": "Tómate un respiro, ya casi terminamos."
+      "id": "sec_scale",
+      "type": "section",
+      "label": "③ Escalas y valoraciones",
+      "description": "scale (con colores) · scale (sin bordes) · rating · csat"
     },
     {
-      "id": "q7_linear_scale",
+      "id": "q_oss_importance",
       "type": "scale",
-      "label": "Escala lineal",
-      "description": "¿Qué tan importante es el open source para ti?",
+      "label": "¿Qué tan importante es el open source para ti?",
       "min": 1,
       "max": 5,
       "min_label": "Nada importante",
       "max_label": "Vital",
-      "required": true
+      "required": true,
+      "scale_style": "bordered",
+      "scale_colors": [
+        { "color": "#ef4444", "pct": 20 },
+        { "color": "#f97316", "pct": 20 },
+        { "color": "#eab308", "pct": 20 },
+        { "color": "#84cc16", "pct": 20 },
+        { "color": "#22c55e", "pct": 20 }
+      ]
     },
     {
-      "id": "q8_rating",
+      "id": "q_privacy_concern",
+      "type": "scale",
+      "label": "¿Qué tanto te preocupa la privacidad de tus datos?",
+      "min": 1,
+      "max": 5,
+      "min_label": "Poco",
+      "max_label": "Mucho",
+      "required": false,
+      "scale_style": "borderless"
+    },
+    {
+      "id": "q_rating",
       "type": "rating",
-      "label": "Calificación",
-      "icon": "star",
+      "label": "¿Cómo calificarías la idea detrás de JFORM?",
       "max_stars": 5,
       "required": false
     },
     {
-      "id": "q9_radio_grid",
-      "type": "radio_grid",
-      "label": "Cuadrícula de varias opciones",
-      "description": "Evalúa las siguientes herramientas",
-      "required": true,
-      "rows": [
-        { "id": "r1", "label": "gitGost" },
-        { "id": "r2", "label": "CodeTrackr" }
-      ],
-      "columns": [
-        { "id": "c1", "label": "Malo" },
-        { "id": "c2", "label": "Regular" },
-        { "id": "c3", "label": "Excelente" }
-      ]
+      "id": "q_csat",
+      "type": "csat",
+      "label": "¿Cómo fue tu experiencia probando este formulario?",
+      "description": "Selecciona el emoji que mejor represente tu sensación",
+      "scale": 5,
+      "required": false,
+      "csat_labels": ["Muy mala", "Mala", "Neutral", "Buena", "Excelente"],
+      "hide_on_mobile": true
+    },
+
+    {
+      "id": "div3",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
     },
     {
-      "id": "q10_checkbox_grid",
-      "type": "checkbox_grid",
-      "label": "Cuadrícula de casillas",
-      "description": "Indica qué lenguajes usas para cada área",
+      "id": "sec_grid",
+      "type": "section",
+      "label": "④ Cuadrículas",
+      "description": "radio_grid · checkbox_grid"
+    },
+    {
+      "id": "q_tool_grid",
+      "type": "radio_grid",
+      "label": "Evalúa estas herramientas de formularios",
+      "description": "Una opción por fila",
       "required": false,
       "rows": [
-        { "id": "r_backend", "label": "Backend" },
-        { "id": "r_frontend", "label": "Frontend" }
+        { "id": "r_gf", "label": "Google Forms" },
+        { "id": "r_tally", "label": "Tally.so" },
+        { "id": "r_jform", "label": "JFORM" }
       ],
       "columns": [
-        { "id": "c_ts", "label": "TypeScript" },
-        { "id": "c_rust", "label": "Rust" },
-        { "id": "c_go", "label": "Go" }
+        { "id": "c_bad", "label": "No me convence" },
+        { "id": "c_ok", "label": "Sirve" },
+        { "id": "c_great", "label": "Me encanta" }
       ]
     },
     {
-      "id": "q11_date",
-      "type": "date",
-      "label": "Fecha de inicio del proyecto",
-      "required": true
+      "id": "q_stack_grid",
+      "type": "checkbox_grid",
+      "label": "¿Qué tecnologías usas en cada capa?",
+      "required": false,
+      "rows": [
+        { "id": "r_be", "label": "Backend" },
+        { "id": "r_fe", "label": "Frontend" },
+        { "id": "r_infra", "label": "Infraestructura" }
+      ],
+      "columns": [
+        { "id": "c_ts2", "label": "TypeScript" },
+        { "id": "c_go2", "label": "Go" },
+        { "id": "c_rust2", "label": "Rust" },
+        { "id": "c_docker", "label": "Docker" }
+      ]
+    },
+
+    {
+      "id": "div4",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
     },
     {
-      "id": "q12_time",
-      "type": "time",
-      "label": "Hora del último commit",
+      "id": "sec_datetime",
+      "type": "section",
+      "label": "⑤ Fecha, hora y archivos",
+      "description": "date · time · file"
+    },
+    {
+      "id": "q_date",
+      "type": "date",
+      "label": "¿Cuándo empezaste tu último proyecto open source?",
       "required": false
+    },
+    {
+      "id": "q_time",
+      "type": "time",
+      "label": "¿A qué hora haces tu commit más productivo?",
+      "required": false
+    },
+    {
+      "id": "q_file",
+      "type": "file",
+      "label": "Adjunta tu clave GPG pública o un screenshot (opcional)",
+      "description": "PNG, JPG o .asc — máx. 5 MB",
+      "accept": "image/png, image/jpeg, .asc",
+      "max_size_mb": 5,
+      "required": false
+    },
+
+    {
+      "id": "div5",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
+    },
+    {
+      "id": "sec_media",
+      "type": "section",
+      "label": "⑥ Contenido multimedia",
+      "description": "image · video · image_selection"
+    },
+    {
+      "id": "mid_image",
+      "type": "image",
+      "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200",
+            "alt_text": "Código en terminal",
+      "caption": "JFORM: define formularios en JSON, despliega con un PR."
+    },
+    {
+      "id": "q_env_pick",
+      "type": "image_selection",
+      "label": "¿Cuál entorno de trabajo te representa más?",
+      "description": "Selecciona una imagen",
+      "selection_mode": "single",
+      "required": false,
+      "image_options": [
+        { "value": "terminal", "label": "Terminal oscura", "url": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=600" },
+        { "value": "bright", "label": "Setup minimalista", "url": "https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=600" },
+        { "value": "remote", "label": "Trabajo remoto", "url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600" },
+        { "value": "collab", "label": "Colaboración", "url": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600" }
+      ]
+    },
+
+    {
+      "id": "div6",
+      "type": "divider",
+      "spacing": 8,
+      "thickness": 1,
+      "color": "#e5e7eb"
+    },
+    {
+      "id": "sec_cta",
+      "type": "section",
+      "label": "⑦ Bloque CTA",
+      "description": "Botones de acción secundarios dentro del formulario"
+    },
+    {
+      "id": "cta_docs",
+      "type": "cta",
+      "label": "¿Quieres crear tu propio formulario?",
+      "button_text": "Leer documentación",
+      "button_url": "https://github.com/livrasand/jform/blob/master/DOCS.md",
+      "button_style": "secondary",
+      "open_in_new_tab": true
+    },
+    {
+      "id": "cta_repo",
+      "type": "cta",
+      "label": "JFORM es 100% open source",
+      "button_text": "Ver código en GitHub",
+      "button_url": "https://github.com/livrasand/jform",
+      "button_style": "secondary",
+      "open_in_new_tab": true
+    },
+
+    {
+      "id": "gap_end",
+      "type": "spacer",
+      "height": 8
     }
   ]
 }

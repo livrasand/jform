@@ -164,7 +164,10 @@
               "scale", "rating",
               "date", "time",
               "file",
-              "image", "video"
+              "image", "video",
+              "image_selection",
+              "csat",
+              "cta"
             ]
           },
           "label": {
@@ -276,6 +279,64 @@
           "caption": {
             "type": "string",
             "description": "Pie de imagen o video para type=image o type=video"
+          },
+          "selection_mode": {
+            "type": "string",
+            "description": "Modo de seleccion para type=image_selection: 'single' (una sola imagen) o 'multiple' (varias imagenes)",
+            "enum": ["single", "multiple"],
+            "default": "single"
+          },
+          "image_options": {
+            "type": "array",
+            "description": "Opciones de imagen para type=image_selection. Cada opcion debe tener value, label y url",
+            "items": {
+              "type": "object",
+              "required": ["value", "label", "url"],
+              "properties": {
+                "value": { "type": "string", "description": "Valor identificador de la opcion" },
+                "label": { "type": "string", "description": "Etiqueta visible de la opcion" },
+                "url": { "type": "string", "format": "uri", "description": "URL de la imagen" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "scale": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 10,
+            "description": "Numero de opciones de escala para type=csat (por defecto 5)"
+          },
+          "csat_labels": {
+            "type": "array",
+            "description": "Etiquetas para cada opcion de escala CSAT. Debe tener la misma longitud que scale",
+            "items": {
+              "type": "string"
+            }
+          },
+          "button_text": {
+            "type": "string",
+            "description": "Texto del boton para type=cta"
+          },
+          "button_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL del enlace del boton para type=cta"
+          },
+          "button_style": {
+            "type": "string",
+            "enum": ["primary", "secondary"],
+            "description": "Estilo del boton para type=cta: 'primary' (color de acento) o 'secondary' (gris)",
+            "default": "primary"
+          },
+          "open_in_new_tab": {
+            "type": "boolean",
+            "description": "Si el enlace debe abrirse en una nueva pestaña para type=cta",
+            "default": true
+          },
+          "hide_on_mobile": {
+            "type": "boolean",
+            "description": "Si el elemento debe ocultarse en pantallas móviles (ancho < 640px)",
+            "default": false
           }
         },
         "additionalProperties": false
