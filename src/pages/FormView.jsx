@@ -216,10 +216,7 @@ export default function FormView() {
       }
     } catch (err) {
       if (err.name === "AbortError") {
-        alert(
-          t("form_err_prefix") +
-            "La solicitud tardó demasiado. Verifica tu conexión o intenta de nuevo.",
-        );
+        alert(t("form_err_prefix") + t("form_err_timeout"));
       } else {
         alert(t("form_err_prefix") + err.message);
       }

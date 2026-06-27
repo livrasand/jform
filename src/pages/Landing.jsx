@@ -1,8 +1,7 @@
 import Nav from "../components/Nav.jsx";
-import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import { useNavigate } from "react-router-dom";
 import { useI18n } from "../i18n.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -19,6 +18,13 @@ export default function Landing() {
   const [regLoading, setRegLoading] = useState(false);
   const [regToken, setRegToken] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [GradientScene, setGradientScene] = useState(null);
+
+  useEffect(() => {
+    import("@shadergradient/react").then((mod) => {
+      setGradientScene(mod);
+    });
+  }, []);
 
   async function handleRegister() {
     if (!email.trim()) {
@@ -466,60 +472,62 @@ export default function Landing() {
         </div>
       </div>
 
-      <ShaderGradientCanvas
-        style={{
-          width: "100%",
-          height: "100dvh",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-        }}
-      >
-        <ShaderGradient
-          animate="on"
-          axesHelper="off"
-          bgColor1="#000000"
-          bgColor2="#000000"
-          brightness={0.18}
-          cAzimuthAngle={180}
-          cDistance={2.8}
-          cPolarAngle={80}
-          cameraZoom={9.1}
-          color1="#606080"
-          color2="#8d7dca"
-          color3="#212121"
-          destination="onCanvas"
-          embedMode="off"
-          envPreset="city"
-          format="gif"
-          fov={45}
-          frameRate={10}
-          gizmoHelper="hide"
-          grain="on"
-          lightType="3d"
-          pixelDensity={1}
-          positionX={0}
-          positionY={0}
-          positionZ={0}
-          range="disabled"
-          rangeEnd={40}
-          rangeStart={0}
-          reflection={0.1}
-          rotationX={50}
-          rotationY={0}
-          rotationZ={-60}
-          shader="defaults"
-          type="waterPlane"
-          uAmplitude={0}
-          uDensity={3}
-          uFrequency={0}
-          uSpeed={0.15}
-          uStrength={1.5}
-          uTime={8}
-          wireframe={false}
-        />
-      </ShaderGradientCanvas>
+      {GradientScene && (
+        <GradientScene.ShaderGradientCanvas
+          style={{
+            width: "100%",
+            height: "100dvh",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: -1,
+          }}
+        >
+          <GradientScene.ShaderGradient
+            animate="on"
+            axesHelper="off"
+            bgColor1="#000000"
+            bgColor2="#000000"
+            brightness={0.18}
+            cAzimuthAngle={180}
+            cDistance={2.8}
+            cPolarAngle={80}
+            cameraZoom={9.1}
+            color1="#606080"
+            color2="#8d7dca"
+            color3="#212121"
+            destination="onCanvas"
+            embedMode="off"
+            envPreset="city"
+            format="gif"
+            fov={45}
+            frameRate={10}
+            gizmoHelper="hide"
+            grain="on"
+            lightType="3d"
+            pixelDensity={1}
+            positionX={0}
+            positionY={0}
+            positionZ={0}
+            range="disabled"
+            rangeEnd={40}
+            rangeStart={0}
+            reflection={0.1}
+            rotationX={50}
+            rotationY={0}
+            rotationZ={-60}
+            shader="defaults"
+            type="waterPlane"
+            uAmplitude={0}
+            uDensity={3}
+            uFrequency={0}
+            uSpeed={0.15}
+            uStrength={1.5}
+            uTime={8}
+            wireframe={false}
+          />
+        </GradientScene.ShaderGradientCanvas>
+      )}
 
       {/* Modal: Registro / Relay de email */}
       {showRegister && (
@@ -546,7 +554,12 @@ export default function Landing() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <button type="button" aria-label="Cerrar" style={closeBtn} onClick={closeModals}>
+                <button
+                  type="button"
+                  aria-label="Cerrar"
+                  style={closeBtn}
+                  onClick={closeModals}
+                >
                   ✕
                 </button>
               </div>
@@ -761,7 +774,12 @@ export default function Landing() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <button type="button" aria-label="Cerrar" style={closeBtn} onClick={closeModals}>
+                <button
+                  type="button"
+                  aria-label="Cerrar"
+                  style={closeBtn}
+                  onClick={closeModals}
+                >
                   ✕
                 </button>
               </div>

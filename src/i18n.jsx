@@ -34,6 +34,8 @@ const translations = {
     form_notfound: "No se encontro el archivo .jform para este usuario.",
     form_invalid: "El archivo .jform tiene una estructura invalida.",
     form_noendpoint: "El archivo .jform no define un endpoint de envio.",
+    form_err_timeout:
+      "La solicitud tardó demasiado. Verifica tu conexión o intenta de nuevo.",
     form_submit: "Enviar datos",
     form_sending: "Enviando...",
     form_ok_title: "Enviado con exito",
@@ -106,6 +108,8 @@ const translations = {
     form_notfound: "No .jform file found for this user.",
     form_invalid: "The .jform file has an invalid structure.",
     form_noendpoint: "The .jform file does not define a submit endpoint.",
+    form_err_timeout:
+      "The request took too long. Check your connection and try again.",
     form_submit: "Submit",
     form_sending: "Sending...",
     form_ok_title: "Sent successfully",

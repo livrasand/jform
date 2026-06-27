@@ -4,6 +4,8 @@ import { neon } from "@neondatabase/serverless";
 import * as openpgp from "openpgp";
 import Busboy from "busboy";
 
+const ORIGIN = process.env.APP_ORIGIN || "https://jform.vercel.app";
+
 async function resolveToken(token) {
   const sql = neon(process.env.DATABASE_URL);
   const rows = await sql`
@@ -22,9 +24,10 @@ async function encryptWithPgp(plaintext, armoredPublicKey) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", ORIGIN);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") {
@@ -198,7 +201,7 @@ export default async function handler(req, res) {
 }
 
 // Helper: construir HTML del email
-function buildEmailHtml(title, data) {
+export function buildEmailHtml(title, data) {
   var rows = "";
   for (var key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -237,7 +240,7 @@ function buildEmailHtml(title, data) {
   );
 }
 
-function esc(s) {
+export function esc(s) {
   return typeof s !== "string"
     ? "" + s
     : s
@@ -248,11 +251,15 @@ function esc(s) {
 }
 
 // Construir texto plano para cifrar con PGP
-function buildEmailPlaintext(title, data) {
+export function buildEmailPlaintext(title, data) {
   var lines = [title, "---"];
   for (var key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {
-      lines.push(key + ": " + data[key]);
+      var val = data[key];
+      if (typeof val === "string" && val.length > 500) {
+        val = val.substring(0, 500) + "... [truncated]";
+      }
+      lines.push(key + ": " + val);
     }
   }
   lines.push("---");
@@ -261,7 +268,7 @@ function buildEmailPlaintext(title, data) {
 }
 
 // Email HTML para mensajes cifrados con PGP
-function buildEmailHtmlPgp(title, encryptedBlock) {
+export function buildEmailHtmlPgp(title, encryptedBlock) {
   return (
     '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#fffafa;font-family:monospace">' +
     '<div style="max-width:560px;margin:40px auto;background:#ffffff;border-radius:12px;border:1px solid #e6dede;overflow:hidden">' +
